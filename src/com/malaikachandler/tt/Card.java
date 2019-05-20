@@ -44,4 +44,8 @@ public class Card {
     public Elemental getElement() {
         return element;
     }
+
+    public int getLevel() {
+        return level;
+    }
 }
