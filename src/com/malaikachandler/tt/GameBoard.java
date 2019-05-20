@@ -33,6 +33,17 @@ public class GameBoard {
         }
     }
 
+    public boolean placeCard(int x, int y, Card card) {
+        int index = (x * 3) + y;
+        if (gameboard.length > index) {
+            if (gameboard[index].getCard() == null) {
+                gameboard[index].setCard(card);
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -60,6 +71,14 @@ public class GameBoard {
             this.setRight(null);
             this.setBottom(null);
             this.card = null;
+        }
+
+        public Card getCard() {
+            return card;
+        }
+
+        public void setCard(Card card) {
+            this.card = card;
         }
 
         public void setAbove(GameBoardCardPosition g) {
