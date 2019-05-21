@@ -7,7 +7,7 @@ public class GameBoardCardPosition {
 
     private Card card;
     private Elemental element = null;
-    private Map<String, GameBoardCardPosition> adjacentCards = new HashMap<>();
+    private Map<Position, GameBoardCardPosition> adjacentCards = new HashMap<>();
     private Player ownedBy;
 
     public GameBoardCardPosition() {
@@ -27,41 +27,34 @@ public class GameBoardCardPosition {
         return ownedBy;
     }
 
+    public void setOwnedBy(Player ownedBy) {
+        this.ownedBy = ownedBy;
+    }
+
     public void setCard(Player p, Card card) {
         this.ownedBy = p;
         this.card = card;
+        this.flipAdjacent();
     }
 
     public void setAbove(GameBoardCardPosition g) {
-        this.adjacentCards.put("above", g);
+        this.adjacentCards.put(Position.TOP, g);
     }
 
     public void setLeft(GameBoardCardPosition g) {
-        this.adjacentCards.put("left", g);
+        this.adjacentCards.put(Position.LEFT, g);
     }
 
     public void setRight(GameBoardCardPosition g) {
-        this.adjacentCards.put("right", g);
+        this.adjacentCards.put(Position.RIGHT, g);
     }
 
     public void setBottom(GameBoardCardPosition g) {
-        this.adjacentCards.put("bottom", g);
+        this.adjacentCards.put(Position.BOTTOM, g);
     }
 
-    public GameBoardCardPosition getAbove() {
-        return this.adjacentCards.get("above");
-    }
-
-    public GameBoardCardPosition getLeft() {
-        return this.adjacentCards.get("left");
-    }
-
-    public GameBoardCardPosition getRight() {
-        return this.adjacentCards.get("right");
-    }
-
-    public GameBoardCardPosition getBottom() {
-        return this.adjacentCards.get("bottom");
+    public GameBoardCardPosition getNeighbor(Position position) {
+        return adjacentCards.get(position);
     }
 
     public Elemental getElement() {
@@ -72,9 +65,14 @@ public class GameBoardCardPosition {
         this.element = element;
     }
 
-    @Override
-    public String toString() {
-        return (this.card == null ? "EMPTY" : this.card.getName());
+    public void flipAdjacent() {
+        this.adjacentCards.forEach((Position neighborPosition, GameBoardCardPosition neighbor) -> {
+            if (neighbor != null && neighbor.ownedBy != this.ownedBy && neighbor.getCard() != null) {
+                Position selfPosition = neighborPosition;
+                if (this.getCard().getRank(selfPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
+                    neighbor.setOwnedBy(this.ownedBy);
+                }
+            }
+        });
     }
-
 }

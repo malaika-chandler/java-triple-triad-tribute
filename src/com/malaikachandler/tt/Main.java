@@ -16,7 +16,7 @@ public class Main {
         Player p2 = new Player("Player2", TerminalColor.ANSI_RED);
         System.out.println(gb.toString());
 
-        ArrayList<Card> cards = CardData.getInstance().getCardsAtLevel(1);
+        ArrayList<Card> cards = CardData.getInstance().getCardsAtLevel(6);
 
         for (Card card : cards) {
             System.out.println(card.getName());
