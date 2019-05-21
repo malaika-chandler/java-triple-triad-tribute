@@ -1,4 +1,6 @@
-package com.malaikachandler.tt;
+package com.malaikachandler.tt.gamecomponents;
+
+import com.malaikachandler.tt.Player;
 
 import java.util.HashMap;
 import java.util.Map;

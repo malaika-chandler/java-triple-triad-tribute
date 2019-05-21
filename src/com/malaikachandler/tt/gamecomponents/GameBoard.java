@@ -1,8 +1,10 @@
-package com.malaikachandler.tt;
+package com.malaikachandler.tt.gamecomponents;
 
+import com.malaikachandler.tt.Player;
 import com.malaikachandler.tt.graphics.TerminalGraphics;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class GameBoard {
 

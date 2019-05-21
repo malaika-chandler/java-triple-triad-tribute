@@ -1,6 +1,7 @@
 package com.malaikachandler.tt;
 
 
+import com.malaikachandler.tt.gamecomponents.Card;
 import com.malaikachandler.tt.graphics.TerminalGraphics;
 
 import java.util.ArrayList;

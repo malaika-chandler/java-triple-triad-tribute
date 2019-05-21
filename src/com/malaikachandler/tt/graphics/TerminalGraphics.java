@@ -1,7 +1,7 @@
 package com.malaikachandler.tt.graphics;
 
-import com.malaikachandler.tt.Card;
-import com.malaikachandler.tt.GameBoardCardPosition;
+import com.malaikachandler.tt.gamecomponents.Card;
+import com.malaikachandler.tt.gamecomponents.GameBoardCardPosition;
 import com.malaikachandler.tt.Player;
 import com.malaikachandler.tt.carddata.CardData;
 

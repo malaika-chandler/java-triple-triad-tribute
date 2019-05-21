@@ -1,7 +1,7 @@
 package com.malaikachandler.tt.carddata;
 
-import com.malaikachandler.tt.Card;
-import com.malaikachandler.tt.Elemental;
+import com.malaikachandler.tt.gamecomponents.Card;
+import com.malaikachandler.tt.gamecomponents.Elemental;
 
 import java.util.ArrayList;
 import java.util.HashMap;
