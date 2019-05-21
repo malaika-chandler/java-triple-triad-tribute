@@ -1,47 +1,62 @@
 package com.malaikachandler.tt;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.malaikachandler.tt.graphics.TerminalGraphics;
+
+import java.util.*;
 
 public class GameBoard {
 
-    GameBoardCardPosition[] gameboard;
+    private GameBoardCardPosition[][] gameBoard;
 
     public GameBoard() {
-        this.gameboard = new GameBoardCardPosition[]{
-                new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition(),
-                new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition(),
-                new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition()
+        this.gameBoard = new GameBoardCardPosition[][] {
+                { new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition() },
+                { new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition() },
+                { new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition() }
         };
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                GameBoardCardPosition g = this.gameboard[(3 * i) + j];
-                if (i > 0) {
-                    g.setAbove(gameboard[3  * (i - 1) + j]);
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                GameBoardCardPosition g = this.gameBoard[row][col];
+                if (row > 0) {
+                    g.setAbove(gameBoard[row - 1][col]);
                 }
-                if (i < 2) {
-                    g.setBottom(gameboard[3  * (i + 1) + j]);
+                if (row < 2) {
+                    g.setBottom(gameBoard[row + 1][col]);
                 }
-                if (j > 0) {
-                    g.setLeft(gameboard[(3 * i) + j - 1]);
+                if (col > 0) {
+                    g.setLeft(gameBoard[row][col - 1]);
                 }
-                if (j < 2) {
-                    g.setRight(gameboard[(3  * i) + j + 1]);
+                if (col < 2) {
+                    g.setRight(gameBoard[row][col + 1]);
                 }
             }
         }
     }
 
-    public boolean placeCard(int x, int y, Card card) {
-        int index = (x * 3) + y;
-        if (gameboard.length > index) {
-            if (gameboard[index].getCard() == null) {
-                gameboard[index].setCard(card);
+    public boolean placeCard(int row, int col, Card card) {
+//        int index = (x * 3) + y;
+        if (true) { // TODO make official check for row/col
+            if (gameBoard[row][col].getCard() == null) {
+                gameBoard[row][col].setCard(card);
                 return true;
             }
         }
         return false;
+    }
+
+    public List<Card> getRow(int row) {
+        ArrayList<Card> cards = new ArrayList<>();
+        for (int col = 0; col < gameBoard[row].length; col++) {
+            cards.add(gameBoard[row][col].getCard());
+        }
+        return cards;
+    }
+
+    public void printGameBoard() {
+        TerminalGraphics.printCardRowEx(this.getRow(0));
+        TerminalGraphics.printCardRowEx(this.getRow(1));
+        TerminalGraphics.printCardRowEx(this.getRow(2));
     }
 
     @Override
@@ -50,7 +65,7 @@ public class GameBoard {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                GameBoardCardPosition g = this.gameboard[(3 * i) + j];
+                GameBoardCardPosition g = this.gameBoard[i][j];
                 sb.append(g.toString() + " - ");
             }
             sb.append("\n");
@@ -64,6 +79,7 @@ public class GameBoard {
         private Card card;
         private Elemental element = null;
         private Map<String, GameBoardCardPosition> adjacentCards = new HashMap<>();
+        private Player ownedBy;
 
         public GameBoardCardPosition() {
             this.setAbove(null);
@@ -71,6 +87,7 @@ public class GameBoard {
             this.setRight(null);
             this.setBottom(null);
             this.card = null;
+            this.ownedBy = null;
         }
 
         public Card getCard() {
@@ -111,6 +128,14 @@ public class GameBoard {
 
         public GameBoardCardPosition getBottom() {
             return this.adjacentCards.get("bottom");
+        }
+
+        public Elemental getElement() {
+            return element;
+        }
+
+        public void setElement(Elemental element) {
+            this.element = element;
         }
 
         @Override
