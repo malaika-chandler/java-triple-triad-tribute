@@ -34,29 +34,24 @@ public class GameBoard {
         }
     }
 
-    public boolean placeCard(int row, int col, Card card) {
-//        int index = (x * 3) + y;
+    public boolean placeCard(Player p, int row, int col, Card card) {
         if (true) { // TODO make official check for row/col
             if (gameBoard[row][col].getCard() == null) {
-                gameBoard[row][col].setCard(card);
+                gameBoard[row][col].setCard(p, card);
                 return true;
             }
         }
         return false;
     }
 
-    public List<Card> getRow(int row) {
-        ArrayList<Card> cards = new ArrayList<>();
-        for (int col = 0; col < gameBoard[row].length; col++) {
-            cards.add(gameBoard[row][col].getCard());
-        }
-        return cards;
+    public List<GameBoardCardPosition> getRow(int row) {
+        return Arrays.asList(gameBoard[row]);
     }
 
     public void printGameBoard() {
-        TerminalGraphics.printCardRowEx(this.getRow(0));
-        TerminalGraphics.printCardRowEx(this.getRow(1));
-        TerminalGraphics.printCardRowEx(this.getRow(2));
+        TerminalGraphics.printCardRow(this.getRow(0));
+        TerminalGraphics.printCardRow(this.getRow(1));
+        TerminalGraphics.printCardRow(this.getRow(2));
     }
 
     @Override
@@ -72,75 +67,5 @@ public class GameBoard {
         }
 
         return sb.toString();
-    }
-
-    private class GameBoardCardPosition {
-
-        private Card card;
-        private Elemental element = null;
-        private Map<String, GameBoardCardPosition> adjacentCards = new HashMap<>();
-        private Player ownedBy;
-
-        public GameBoardCardPosition() {
-            this.setAbove(null);
-            this.setLeft(null);
-            this.setRight(null);
-            this.setBottom(null);
-            this.card = null;
-            this.ownedBy = null;
-        }
-
-        public Card getCard() {
-            return card;
-        }
-
-        public void setCard(Card card) {
-            this.card = card;
-        }
-
-        public void setAbove(GameBoardCardPosition g) {
-            this.adjacentCards.put("above", g);
-        }
-
-        public void setLeft(GameBoardCardPosition g) {
-            this.adjacentCards.put("left", g);
-        }
-
-        public void setRight(GameBoardCardPosition g) {
-            this.adjacentCards.put("right", g);
-        }
-
-        public void setBottom(GameBoardCardPosition g) {
-            this.adjacentCards.put("bottom", g);
-        }
-
-        public GameBoardCardPosition getAbove() {
-            return this.adjacentCards.get("above");
-        }
-
-        public GameBoardCardPosition getLeft() {
-            return this.adjacentCards.get("left");
-        }
-
-        public GameBoardCardPosition getRight() {
-            return this.adjacentCards.get("right");
-        }
-
-        public GameBoardCardPosition getBottom() {
-            return this.adjacentCards.get("bottom");
-        }
-
-        public Elemental getElement() {
-            return element;
-        }
-
-        public void setElement(Elemental element) {
-            this.element = element;
-        }
-
-        @Override
-        public String toString() {
-            return (this.card == null ? "EMPTY" : this.card.getName());
-        }
     }
 }
