@@ -65,12 +65,14 @@ public class GameBoardCardPosition {
         this.element = element;
     }
 
+    // TODO: 2019-05-21 Add checks for other rules in the future
     public void flipAdjacent() {
         this.adjacentCards.forEach((Position neighborPosition, GameBoardCardPosition neighbor) -> {
             if (neighbor != null && neighbor.ownedBy != this.ownedBy && neighbor.getCard() != null) {
                 Position selfPosition = neighborPosition;
                 if (this.getCard().getRank(selfPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
                     neighbor.setOwnedBy(this.ownedBy);
+                    System.out.println(" flipping " + neighbor.getCard().getName());
                 }
             }
         });

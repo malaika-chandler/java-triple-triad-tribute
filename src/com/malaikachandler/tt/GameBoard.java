@@ -35,6 +35,7 @@ public class GameBoard {
     }
 
     public boolean placeCard(Player p, int row, int col, Card card) {
+        System.out.println("Player " + p.getName() + " places " + card.getName() + " at row " + row + " and col " + col);
         if (true) { // TODO make official check for row/col
             if (gameBoard[row][col].getCard() == null) {
                 gameBoard[row][col].setCard(p, card);
@@ -49,9 +50,9 @@ public class GameBoard {
     }
 
     public void printGameBoard() {
-        TerminalGraphics.printCardRow(this.getRow(0));
-        TerminalGraphics.printCardRow(this.getRow(1));
-        TerminalGraphics.printCardRow(this.getRow(2));
+        TerminalGraphics.printCardRow(this.getRow(0), 0);
+        TerminalGraphics.printCardRow(this.getRow(1), 1);
+        TerminalGraphics.printCardRow(this.getRow(2), 2);
     }
 
     @Override

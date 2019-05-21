@@ -2,6 +2,7 @@ package com.malaikachandler.tt.graphics;
 
 import com.malaikachandler.tt.Card;
 import com.malaikachandler.tt.GameBoardCardPosition;
+import com.malaikachandler.tt.Player;
 import com.malaikachandler.tt.carddata.CardData;
 
 import java.util.ArrayList;
@@ -27,17 +28,22 @@ public class TerminalGraphics {
         cards3.add(CardData.getInstance().getCardsAtLevel(10).get(5));
         cards3.add(CardData.getInstance().getCardsAtLevel(10).get(6));
 
-        printCardRowEx(cards2);
-        printCardRowEx(cards2);
-        printCardRowEx(cards2);
+        printCardRowEx(cards2, TerminalColor.ANSI_RESET);
+        printCardRowEx(cards2, TerminalColor.ANSI_RESET);
+        printCardRowEx(cards2, TerminalColor.ANSI_RESET);
     }
 
-    public static void printCardRow(List<GameBoardCardPosition> positions) {
+    public static void printPlayerHand(Player player) {
+        printCardRowEx(player.getHand(), player.getColor());
+    }
+
+    public static void printCardRow(List<GameBoardCardPosition> positions, int row) {
         StringBuilder sb = new StringBuilder();
         int width = 5;
         int height = 4;
 
         for (int i = 0; i < height; i++) {
+            int col = 0;
             for (GameBoardCardPosition gp : positions) {
                 Card c = gp.getCard();
                 String color = gp.getOwnedBy() == null ? TerminalColor.ANSI_RESET : gp.getOwnedBy().getColor();
@@ -74,20 +80,24 @@ public class TerminalGraphics {
                                 sb.append("|");
                                 break;
                             case 2:
-                                sb.append(" ");
+                                if (c != null) {
+                                    sb.append(" ");
+                                } else {
+                                    sb.append(",");
+                                }
                                 break;
                             case 3:
                                 if (c != null) {
                                     sb.append(c.getRight() == 10 ? "A" : c.getRight());
                                 } else {
-                                    sb.append(" ");
+                                    sb.append(col);
                                 }
                                 break;
                             case 1:
                                 if (c != null) {
                                     sb.append(c.getLeft() == 10 ? "A" : c.getLeft());
                                 } else {
-                                    sb.append(" ");
+                                    sb.append(row);
                                 }
                                 break;
                         }
@@ -112,18 +122,23 @@ public class TerminalGraphics {
                         }
                     }
                 }
+                col++;
             }
             if (i != 3) {
                 sb.append("\n");
             }
         }
+
+        sb.append(TerminalColor.ANSI_RESET);
         System.out.println(sb.toString());
     }
 
-    public static void printCardRowEx(List<Card> cards) {
+    public static void printCardRowEx(List<Card> cards, String color) {
         StringBuilder sb = new StringBuilder();
         int width = 5;
         int height = 4;
+
+        sb.append(color);
 
         for (int i = 0; i < height; i++) {
             for (Card c : cards) {
@@ -202,6 +217,7 @@ public class TerminalGraphics {
                 sb.append("\n");
             }
         }
+        sb.append(TerminalColor.ANSI_RESET);
         System.out.println(sb.toString());
     }
 
