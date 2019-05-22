@@ -2,6 +2,7 @@ package com.malaikachandler.tt;
 
 
 import com.malaikachandler.tt.gamecomponents.Card;
+import com.malaikachandler.tt.gamecomponents.GameConstants;
 import com.malaikachandler.tt.graphics.TerminalGraphics;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Player {
         this.name = name;
         this.color = color;
         this.hand = new ArrayList<>();
-        this.score = 0;
+        this.score = GameConstants.INITIAL_SCORE;
     }
 
     public String getName() {
@@ -31,6 +32,10 @@ public class Player {
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public ArrayList<Card> getHand() {
