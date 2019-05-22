@@ -6,6 +6,7 @@ import com.malaikachandler.tt.gamecomponents.GameConstants;
 import com.malaikachandler.tt.graphics.TerminalGraphics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
@@ -13,7 +14,7 @@ public class Player {
     private String color;
     private int score;
 
-    private ArrayList<Card> hand;
+    private List<Card> hand;
 
     public Player(String name, String color) {
         this.name = name;
@@ -38,7 +39,15 @@ public class Player {
         this.score = score;
     }
 
-    public ArrayList<Card> getHand() {
+    public void incrementScore() {
+        this.score++;
+    }
+
+    public void decremementScore() {
+        this.score--;
+    }
+
+    public List<Card> getHand() {
         return hand;
     }
 
@@ -46,7 +55,7 @@ public class Player {
         return this.hand.remove(index);
     }
 
-    public void setHand(ArrayList<Card> dealtHand) {
+    public void setHand(List<Card> dealtHand) {
         this.hand = dealtHand;
     }
 

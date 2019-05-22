@@ -267,4 +267,10 @@ public class TerminalGraphics {
         }
         System.out.println(sb.toString());
     }
+
+    public static void displayPlayerScores(Player p1, Player p2) {
+        System.out.println("Score:");
+        System.out.println(p1.getName() + " has " + p1.getScore() + " points");
+        System.out.println(p2.getName() + " has " + p2.getScore() + " points");
+    }
 }
