@@ -4,6 +4,7 @@ import com.malaikachandler.tt.gamecomponents.Card;
 import com.malaikachandler.tt.gamecomponents.GameBoardCardPosition;
 import com.malaikachandler.tt.Player;
 import com.malaikachandler.tt.carddata.CardData;
+import com.malaikachandler.tt.gamecomponents.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class TerminalGraphics {
                                 break;
                             case 2:
                                 if (c != null) {
-                                    sb.append(c.getTop() == 10 ? "A" : c.getTop());
+                                    sb.append(c.getRank(Position.TOP) == 10 ? "A" : c.getRank(Position.TOP));
                                 } else {
                                     sb.append(" ");
                                 }
@@ -88,14 +89,14 @@ public class TerminalGraphics {
                                 break;
                             case 3:
                                 if (c != null) {
-                                    sb.append(c.getRight() == 10 ? "A" : c.getRight());
+                                    sb.append(c.getRank(Position.RIGHT) == 10 ? "A" : c.getRank(Position.RIGHT));
                                 } else {
                                     sb.append(col);
                                 }
                                 break;
                             case 1:
                                 if (c != null) {
-                                    sb.append(c.getLeft() == 10 ? "A" : c.getLeft());
+                                    sb.append(c.getRank(Position.LEFT) == 10 ? "A" : c.getRank(Position.LEFT));
                                 } else {
                                     sb.append(row);
                                 }
@@ -114,7 +115,7 @@ public class TerminalGraphics {
                                 break;
                             case 2:
                                 if (c != null) {
-                                    sb.append(c.getBottom() == 10 ? "A" : c.getBottom());
+                                    sb.append(c.getRank(Position.BOTTOM) == 10 ? "A" : c.getRank(Position.BOTTOM));
                                 } else {
                                     sb.append("_");
                                 }
@@ -159,7 +160,7 @@ public class TerminalGraphics {
                                 break;
                             case 2:
                                 if (c != null) {
-                                    sb.append(c.getTop() == 10 ? "A" : c.getTop());
+                                    sb.append(c.getRank(Position.TOP) == 10 ? "A" : c.getRank(Position.TOP));
                                 } else {
                                     sb.append(" ");
                                 }
@@ -178,14 +179,14 @@ public class TerminalGraphics {
                                 break;
                             case 3:
                                 if (c != null) {
-                                    sb.append(c.getRight() == 10 ? "A" : c.getRight());
+                                    sb.append(c.getRank(Position.RIGHT) == 10 ? "A" : c.getRank(Position.RIGHT));
                                 } else {
                                     sb.append(" ");
                                 }
                                 break;
                             case 1:
                                 if (c != null) {
-                                    sb.append(c.getLeft() == 10 ? "A" : c.getLeft());
+                                    sb.append(c.getRank(Position.LEFT) == 10 ? "A" : c.getRank(Position.LEFT));
                                 } else {
                                     sb.append(" ");
                                 }
@@ -204,7 +205,7 @@ public class TerminalGraphics {
                                 break;
                             case 2:
                                 if (c != null) {
-                                    sb.append(c.getBottom() == 10 ? "A" : c.getBottom());
+                                    sb.append(c.getRank(Position.BOTTOM) == 10 ? "A" : c.getRank(Position.BOTTOM));
                                 } else {
                                     sb.append("_");
                                 }
@@ -238,7 +239,7 @@ public class TerminalGraphics {
                         case 4: sb.append("|"); break;
                         case 1:
                         case 3: sb.append("_"); break;
-                        case 2: sb.append(card.getTop() == 10 ? "A" : card.getTop()); break;
+                        case 2: sb.append(card.getRank(Position.TOP) == 10 ? "A" : card.getRank(Position.TOP)); break;
                     }
                 }
                 if (i == 2) {
@@ -246,8 +247,8 @@ public class TerminalGraphics {
                         case 0:
                         case 4: sb.append("|"); break;
                         case 2: sb.append("_"); break;
-                        case 3: sb.append(card.getRight() == 10 ? "A" : card.getRight()); break;
-                        case 1: sb.append(card.getLeft() == 10 ? "A" : card.getLeft()); break;
+                        case 3: sb.append(card.getRank(Position.RIGHT) == 10 ? "A" : card.getRank(Position.RIGHT)); break;
+                        case 1: sb.append(card.getRank(Position.LEFT) == 10 ? "A" : card.getRank(Position.LEFT)); break;
                     }
                 }
                 if (i == 3) {
@@ -256,7 +257,7 @@ public class TerminalGraphics {
                         case 4: sb.append("|"); break;
                         case 1:
                         case 3: sb.append("_"); break;
-                        case 2: sb.append(card.getBottom() == 10 ? "A" : card.getBottom()); break;
+                        case 2: sb.append(card.getRank(Position.BOTTOM) == 10 ? "A" : card.getRank(Position.BOTTOM)); break;
                     }
                 }
             }
