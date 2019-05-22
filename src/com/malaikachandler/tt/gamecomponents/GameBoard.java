@@ -66,7 +66,7 @@ public class GameBoard {
     }
 
     public boolean hasEmptySpaces() {
-        return occupiedSpaces == GameConstants.TOTAL_BOARD_SPACES;
+        return occupiedSpaces != GameConstants.TOTAL_BOARD_SPACES;
     }
 
     @Override

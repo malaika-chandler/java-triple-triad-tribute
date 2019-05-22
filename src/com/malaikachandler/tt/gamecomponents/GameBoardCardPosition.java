@@ -60,7 +60,9 @@ public class GameBoardCardPosition {
         this.adjacentCards.forEach((Position neighborPosition, GameBoardCardPosition neighbor) -> {
             if (neighbor != null && neighbor.ownedBy != this.ownedBy && neighbor.getCard() != null) {
                 if (this.getCard().getRank(neighborPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
+                    neighbor.getOwnedBy().decremementScore();
                     neighbor.setOwnedBy(this.ownedBy);
+                    this.ownedBy.incrementScore();
                     System.out.println(" flipping " + neighbor.getCard().getName());
                 }
             }
