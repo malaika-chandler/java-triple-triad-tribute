@@ -13,10 +13,10 @@ public class GameBoardCardPosition {
     private Player ownedBy;
 
     public GameBoardCardPosition() {
-        this.setAbove(null);
-        this.setLeft(null);
-        this.setRight(null);
-        this.setBottom(null);
+        this.setRank(Position.TOP, null);
+        this.setRank(Position.LEFT, null);
+        this.setRank(Position.RIGHT, null);
+        this.setRank(Position.BOTTOM, null);
         this.card = null;
         this.ownedBy = null;
     }
@@ -39,20 +39,8 @@ public class GameBoardCardPosition {
         this.flipAdjacent();
     }
 
-    public void setAbove(GameBoardCardPosition g) {
-        this.adjacentCards.put(Position.TOP, g);
-    }
-
-    public void setLeft(GameBoardCardPosition g) {
-        this.adjacentCards.put(Position.LEFT, g);
-    }
-
-    public void setRight(GameBoardCardPosition g) {
-        this.adjacentCards.put(Position.RIGHT, g);
-    }
-
-    public void setBottom(GameBoardCardPosition g) {
-        this.adjacentCards.put(Position.BOTTOM, g);
+    public void setRank(Position position, GameBoardCardPosition gp) {
+        this.adjacentCards.put(position, gp);
     }
 
     public GameBoardCardPosition getNeighbor(Position position) {
@@ -71,8 +59,7 @@ public class GameBoardCardPosition {
     public void flipAdjacent() {
         this.adjacentCards.forEach((Position neighborPosition, GameBoardCardPosition neighbor) -> {
             if (neighbor != null && neighbor.ownedBy != this.ownedBy && neighbor.getCard() != null) {
-                Position selfPosition = neighborPosition;
-                if (this.getCard().getRank(selfPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
+                if (this.getCard().getRank(neighborPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
                     neighbor.setOwnedBy(this.ownedBy);
                     System.out.println(" flipping " + neighbor.getCard().getName());
                 }

@@ -6,22 +6,14 @@ import java.util.Map;
 public class Card {
 
     private final String name;
-    private final int top;
-    private final int left;
-    private final int right;
-    private final int bottom;
-
-    Map<Position, Integer> ranks;
-
     private final Elemental element;
     private final int level;
 
+    private Map<Position, Integer> ranks;
+
+
     public Card(String name, int top, int left, int right, int bottom, Elemental element, int level) {
         this.name = name;
-        this.top = top;
-        this.left = left;
-        this.right = right;
-        this.bottom = bottom;
         this.element = element;
         this.level = level;
 
@@ -34,22 +26,6 @@ public class Card {
 
     public String getName() {
         return name;
-    }
-
-    public int getTop() {
-        return top;
-    }
-
-    public int getLeft() {
-        return left;
-    }
-
-    public int getRight() {
-        return right;
-    }
-
-    public int getBottom() {
-        return bottom;
     }
 
     public int getRank(Position position) {
