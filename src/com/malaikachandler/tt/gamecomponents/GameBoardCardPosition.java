@@ -13,10 +13,10 @@ public class GameBoardCardPosition {
     private Player ownedBy;
 
     public GameBoardCardPosition() {
-        this.setRank(Position.TOP, null);
-        this.setRank(Position.LEFT, null);
-        this.setRank(Position.RIGHT, null);
-        this.setRank(Position.BOTTOM, null);
+        this.setNeighbor(Position.TOP, null);
+        this.setNeighbor(Position.LEFT, null);
+        this.setNeighbor(Position.RIGHT, null);
+        this.setNeighbor(Position.BOTTOM, null);
         this.card = null;
         this.ownedBy = null;
     }
@@ -39,7 +39,7 @@ public class GameBoardCardPosition {
         this.flipAdjacent();
     }
 
-    public void setRank(Position position, GameBoardCardPosition gp) {
+    public void setNeighbor(Position position, GameBoardCardPosition gp) {
         this.adjacentCards.put(position, gp);
     }
 

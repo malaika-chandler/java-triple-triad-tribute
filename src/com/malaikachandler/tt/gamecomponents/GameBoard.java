@@ -23,16 +23,16 @@ public class GameBoard {
             for (int col = 0; col < GameConstants.BOARD_HEIGHT; col++) {
                 GameBoardCardPosition g = this.gameBoard[row][col];
                 if (row > 0) {
-                    g.setRank(Position.TOP, gameBoard[row - 1][col]);
+                    g.setNeighbor(Position.TOP, gameBoard[row - 1][col]);
                 }
                 if (row < GameConstants.BOARD_HEIGHT - 1) {
-                    g.setRank(Position.BOTTOM, gameBoard[row + 1][col]);
+                    g.setNeighbor(Position.BOTTOM, gameBoard[row + 1][col]);
                 }
                 if (col > 0) {
-                    g.setRank(Position.LEFT, gameBoard[row][col - 1]);
+                    g.setNeighbor(Position.LEFT, gameBoard[row][col - 1]);
                 }
                 if (col < GameConstants.BOARD_WIDTH - 1) {
-                    g.setRank(Position.RIGHT, gameBoard[row][col + 1]);
+                    g.setNeighbor(Position.RIGHT, gameBoard[row][col + 1]);
                 }
             }
         }
