@@ -1,6 +1,5 @@
 package com.malaikachandler.tt.gamecomponents;
 
-import com.malaikachandler.tt.Player;
 import com.malaikachandler.tt.graphics.TerminalGraphics;
 
 import java.util.Arrays;

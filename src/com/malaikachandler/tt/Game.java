@@ -4,6 +4,7 @@ import com.malaikachandler.tt.carddata.CardData;
 import com.malaikachandler.tt.gamecomponents.Card;
 import com.malaikachandler.tt.gamecomponents.GameBoard;
 import com.malaikachandler.tt.gamecomponents.GameConstants;
+import com.malaikachandler.tt.gamecomponents.Player;
 import com.malaikachandler.tt.graphics.TerminalColor;
 import com.malaikachandler.tt.graphics.TerminalGraphics;
 
