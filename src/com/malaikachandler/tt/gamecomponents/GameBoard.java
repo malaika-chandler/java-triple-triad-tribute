@@ -73,18 +73,4 @@ public class GameBoard {
         return occupiedSpaces != GameConstants.TOTAL_BOARD_SPACES;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                GameBoardCardPosition g = this.gameBoard[i][j];
-                sb.append(g.toString() + " - ");
-            }
-            sb.append("\n");
-        }
-
-        return sb.toString();
-    }
 }

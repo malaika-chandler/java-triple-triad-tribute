@@ -12,6 +12,22 @@ public class TerminalInput implements InputSource {
 
     private Scanner scanner = new Scanner(System.in);
 
+    @Override
+    public void quitGame()  {
+        System.out.println("Buhbyyye");
+        System.exit(0);
+    }
+
+    @Override
+    public String getName() {
+        String name;
+        do {
+            name = scanner.nextLine();
+        } while (name.equals(""));
+
+        return name;
+    }
+
     public void playerTurn(GameBoard gameBoard, Player player) {
         int row, col;
         Card card;
@@ -70,21 +86,5 @@ public class TerminalInput implements InputSource {
         while (!(col >= 0 && col < GameConstants.BOARD_WIDTH && colIndexes.contains(col)));
 
         return col;
-    }
-
-    @Override
-    public void quitGame()  {
-        System.out.println("Buhbyyye");
-        System.exit(0);
-    }
-
-    @Override
-    public String getName() {
-        String name;
-        do {
-            name = scanner.nextLine();
-        } while (name.equals(""));
-
-        return name;
     }
 }

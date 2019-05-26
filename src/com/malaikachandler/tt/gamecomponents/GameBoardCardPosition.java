@@ -61,7 +61,7 @@ public class GameBoardCardPosition {
                     neighbor.setOwnedBy(this.ownedBy);
                     this.ownedBy.incrementScore();
 
-                    // TODO: 2019-05-26 Get this outta here 
+                    // TODO: 2019-05-26 Get this outta here
                     System.out.println(" flipping " + neighbor.getCard().getName());
                 }
             }

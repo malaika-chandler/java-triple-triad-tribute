@@ -1,38 +1,62 @@
 package com.malaikachandler.tt.graphics;
 
-import com.malaikachandler.tt.carddata.CardData;
 import com.malaikachandler.tt.gamecomponents.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TerminalGraphics implements OutputSource {
 
-    public static void main(String[] args) {
-        // testing
-
-        ArrayList<Card> cards1 = new ArrayList<>();
-        cards1.add(CardData.getInstance().getCardsAtLevel(10).get(0));
-        cards1.add(CardData.getInstance().getCardsAtLevel(10).get(5));
-        cards1.add(CardData.getInstance().getCardsAtLevel(10).get(6));
-
-        ArrayList<Card> cards2 = new ArrayList<>();
-        cards2.add(null);
-        cards2.add(null);
-        cards2.add(null);
-
-        ArrayList<Card> cards3 = new ArrayList<>();
-        cards3.add(CardData.getInstance().getCardsAtLevel(10).get(0));
-        cards3.add(CardData.getInstance().getCardsAtLevel(10).get(5));
-        cards3.add(CardData.getInstance().getCardsAtLevel(10).get(6));
-
-        printCardRowEx(cards2, TerminalColor.ANSI_RESET);
-        printCardRowEx(cards2, TerminalColor.ANSI_RESET);
-        printCardRowEx(cards2, TerminalColor.ANSI_RESET);
+    @Override
+    public void notifyTurn(Player player) {
+        System.out.println(player.getName() + "'s turn");
     }
 
-    public static void printCardRow(List<GameBoardCardPosition> positions, int row) {
+    @Override
+    public void handleGameBoard(GameBoard gameBoard) {
+        for (int i = 0; i < GameConstants.BOARD_HEIGHT; i++) {
+            printCardRow(gameBoard.getRow(i), i);
+        }
+    }
+
+    @Override
+    public void showPlayerHand(Player player) {
+        printCardRowEx(player.getHand(), player.getColor());
+    }
+
+    @Override
+    public void indicateCardOptions(Player player) {
+        System.out.println("Choose card index: 0 - " + (player.getHand().size() - 1));
+    }
+
+    @Override
+    public void handlePlayerScores(Player[] players) {
+        System.out.println("Score:");
+        for (Player player : players) {
+            System.out.println(player.getName() + " has " + player.getScore() + " points");
+        }
+    }
+
+    @Override
+    public void handleGetInitialPlayerDataPrompt(int index) {
+        System.out.println("Enter name for player " + (index + 1) + ":");
+    }
+
+    @Override
+    public void displayEndGame(Player[] players) {
+        Player maxScorePlayer = Arrays.stream(players).max(Player::compareTo).get();
+        if (maxScorePlayer.getScore() == GameConstants.INITIAL_SCORE) {
+            System.out.println();
+            System.out.println("DRAW");
+            System.out.println();
+        } else {
+            System.out.println();
+            System.out.println(maxScorePlayer.getName() + " wins!");
+            System.out.println();
+        }
+    }
+
+    private void printCardRow(List<GameBoardCardPosition> positions, int row) {
         StringBuilder sb = new StringBuilder();
         int width = 5;
         int height = 4;
@@ -128,7 +152,7 @@ public class TerminalGraphics implements OutputSource {
         System.out.println(sb.toString());
     }
 
-    public static void printCardRowEx(List<Card> cards, String color) {
+    private void printCardRowEx(List<Card> cards, String color) {
         StringBuilder sb = new StringBuilder();
         int width = 5;
         int height = 4;
@@ -216,98 +240,50 @@ public class TerminalGraphics implements OutputSource {
         System.out.println(sb.toString());
     }
 
-    private static void printCardEx(Card card) {
-        StringBuilder sb = new StringBuilder();
-        int width = 5;
-        int height = 4;
+//    private static void printCardEx(Card card) {
+//        StringBuilder sb = new StringBuilder();
+//        int width = 5;
+//        int height = 4;
+//
+//        for (int i = 0; i < height; i++) {
+//            for (int j = 0; j < width; j++) {
+//
+//                if (i == 0) {
+//                    sb.append("_");
+//                }
+//                if (i == 1) {
+//                    switch (j) {
+//                        case 0:
+//                        case 4: sb.append("|"); break;
+//                        case 1:
+//                        case 3: sb.append("_"); break;
+//                        case 2: sb.append(card.getRank(Position.TOP) == 10 ? "A" : card.getRank(Position.TOP)); break;
+//                    }
+//                }
+//                if (i == 2) {
+//                    switch (j) {
+//                        case 0:
+//                        case 4: sb.append("|"); break;
+//                        case 2: sb.append("_"); break;
+//                        case 3: sb.append(card.getRank(Position.RIGHT) == 10 ? "A" : card.getRank(Position.RIGHT)); break;
+//                        case 1: sb.append(card.getRank(Position.LEFT) == 10 ? "A" : card.getRank(Position.LEFT)); break;
+//                    }
+//                }
+//                if (i == 3) {
+//                    switch (j) {
+//                        case 0:
+//                        case 4: sb.append("|"); break;
+//                        case 1:
+//                        case 3: sb.append("_"); break;
+//                        case 2: sb.append(card.getRank(Position.BOTTOM) == 10 ? "A" : card.getRank(Position.BOTTOM)); break;
+//                    }
+//                }
+//            }
+//            if (i != 3) {
+//                sb.append("\n");
+//            }
+//        }
+//        System.out.println(sb.toString());
+//    }
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-
-                if (i == 0) {
-                    sb.append("_");
-                }
-                if (i == 1) {
-                    switch (j) {
-                        case 0:
-                        case 4: sb.append("|"); break;
-                        case 1:
-                        case 3: sb.append("_"); break;
-                        case 2: sb.append(card.getRank(Position.TOP) == 10 ? "A" : card.getRank(Position.TOP)); break;
-                    }
-                }
-                if (i == 2) {
-                    switch (j) {
-                        case 0:
-                        case 4: sb.append("|"); break;
-                        case 2: sb.append("_"); break;
-                        case 3: sb.append(card.getRank(Position.RIGHT) == 10 ? "A" : card.getRank(Position.RIGHT)); break;
-                        case 1: sb.append(card.getRank(Position.LEFT) == 10 ? "A" : card.getRank(Position.LEFT)); break;
-                    }
-                }
-                if (i == 3) {
-                    switch (j) {
-                        case 0:
-                        case 4: sb.append("|"); break;
-                        case 1:
-                        case 3: sb.append("_"); break;
-                        case 2: sb.append(card.getRank(Position.BOTTOM) == 10 ? "A" : card.getRank(Position.BOTTOM)); break;
-                    }
-                }
-            }
-            if (i != 3) {
-                sb.append("\n");
-            }
-        }
-        System.out.println(sb.toString());
-    }
-
-    @Override
-    public void notifyTurn(Player player) {
-        System.out.println(player.getName() + "'s turn");
-    }
-
-    @Override
-    public void handleGameBoard(GameBoard gameBoard) {
-        for (int i = 0; i < GameConstants.BOARD_HEIGHT; i++) {
-            printCardRow(gameBoard.getRow(i), i);
-        }
-    }
-
-    @Override
-    public void showPlayerHand(Player player) {
-        printCardRowEx(player.getHand(), player.getColor());
-    }
-
-    @Override
-    public void indicateCardOptions(Player player) {
-        System.out.println("Choose card index: 0 - " + (player.getHand().size() - 1));
-    }
-
-    @Override
-    public void handlePlayerScores(Player[] players) {
-        System.out.println("Score:");
-        for (Player player : players) {
-            System.out.println(player.getName() + " has " + player.getScore() + " points");
-        }
-    }
-
-    @Override
-    public void handleGetInitialPlayerDataPrompt(int index) {
-        System.out.println("Enter name for player " + (index + 1) + ":");
-    }
-
-    @Override
-    public void displayEndGame(Player[] players) {
-        Player maxScorePlayer = Arrays.stream(players).max(Player::compareTo).get();
-        if (maxScorePlayer.getScore() == GameConstants.INITIAL_SCORE) {
-            System.out.println();
-            System.out.println("DRAW");
-            System.out.println();
-        } else {
-            System.out.println();
-            System.out.println(maxScorePlayer.getName() + " wins!");
-            System.out.println();
-        }
-    }
 }
