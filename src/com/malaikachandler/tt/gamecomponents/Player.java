@@ -21,8 +21,8 @@ public class Player implements Comparable<Player>{
 
     @Override
     public int compareTo(Player player) {
-        // Returns negative if player has larger score than comparison player
-        return player.getScore() - this.getScore();
+        // Returns negative if player has smaller score than comparison player
+        return this.getScore() - player.getScore();
     }
 
     public String getName() {
