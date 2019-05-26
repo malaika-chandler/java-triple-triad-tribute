@@ -41,14 +41,6 @@ public class Player implements Comparable<Player>{
         this.score = score;
     }
 
-    public void incrementScore() {
-        this.score++;
-    }
-
-    public void decrementScore() {
-        this.score--;
-    }
-
     public List<Card> getHand() {
         return hand;
     }
@@ -63,5 +55,13 @@ public class Player implements Comparable<Player>{
 
     public void setHand(List<Card> dealtHand) {
         this.hand = dealtHand;
+    }
+
+    void incrementScore() {
+        this.score++;
+    }
+
+    void decrementScore() {
+        this.score--;
     }
 }

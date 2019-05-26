@@ -12,11 +12,11 @@ public class TerminalInput implements InputSource {
 
     private Scanner scanner = new Scanner(System.in);
 
-    @Override
-    public void quitGame()  {
-        System.out.println("Buhbyyye");
-        System.exit(0);
-    }
+//    @Override
+//    public void quitGame()  {
+//        System.out.println("Buhbyyye");
+//        System.exit(0);
+//    }
 
     @Override
     public String getName() {
@@ -56,7 +56,7 @@ public class TerminalInput implements InputSource {
                 cardIndex = scanner.nextInt();
             }
         }
-        while (!(cardIndex >= 0 && cardIndex < player.getHand().size()));;
+        while (!(cardIndex >= 0 && cardIndex < player.getHand().size()));
 
         return player.peekCard(cardIndex);
     }

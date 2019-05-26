@@ -41,7 +41,8 @@ public class GameBoard {
         if (this.isValidRowCol(row, col)) {
             if (gameBoard[row][col].getCard() == null) {
                 gameBoard[row][col].setCard(p, card);
-                gameBoard[row][col].flipAdjacent();
+
+                flipAdjacentGamePositions(gameBoard[row][col]);
                 occupiedSpaces++;
                 return true;
             }
@@ -58,6 +59,22 @@ public class GameBoard {
             }
         }
         return availableColIndexes;
+    }
+
+    // TODO: 2019-05-21 Add checks for other rules in the future
+    private void flipAdjacentGamePositions(GameBoardCardPosition position) {
+        position.getNeighbors().forEach((Position neighborPosition, GameBoardCardPosition neighbor) -> {
+            if (neighbor != null && neighbor.getOwnedBy() != position.getOwnedBy() && neighbor.getCard() != null) {
+                if (position.getCard().getRank(neighborPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
+                    neighbor.getOwnedBy().decrementScore();
+                    neighbor.setOwnedBy(position.getOwnedBy());
+                    position.getOwnedBy().incrementScore();
+
+                    // TODO: 2019-05-26 Get this outta here
+                    System.out.println(" flipping " + neighbor.getCard().getName());
+                }
+            }
+        });
     }
 
     private boolean isValidRowCol(int row, int col) {

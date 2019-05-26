@@ -44,15 +44,17 @@ public class TerminalGraphics implements OutputSource {
 
     @Override
     public void displayEndGame(Player[] players) {
-        Player maxScorePlayer = Arrays.stream(players).max(Player::compareTo).get();
-        if (maxScorePlayer.getScore() == GameConstants.INITIAL_SCORE) {
-            System.out.println();
-            System.out.println("DRAW");
-            System.out.println();
-        } else {
-            System.out.println();
-            System.out.println(maxScorePlayer.getName() + " wins!");
-            System.out.println();
+        if (players.length > 0) {
+            Player maxScorePlayer = Arrays.stream(players).max(Player::compareTo).get();
+            if (maxScorePlayer.getScore() == GameConstants.INITIAL_SCORE) {
+                System.out.println();
+                System.out.println("DRAW");
+                System.out.println();
+            } else {
+                System.out.println();
+                System.out.println(maxScorePlayer.getName() + " wins!");
+                System.out.println();
+            }
         }
     }
 

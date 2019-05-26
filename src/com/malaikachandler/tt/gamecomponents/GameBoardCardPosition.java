@@ -10,7 +10,7 @@ public class GameBoardCardPosition {
     private Map<Position, GameBoardCardPosition> adjacentCards = new HashMap<>();
     private Player ownedBy;
 
-    public GameBoardCardPosition() {
+    GameBoardCardPosition() {
         this.setNeighbor(Position.TOP, null);
         this.setNeighbor(Position.LEFT, null);
         this.setNeighbor(Position.RIGHT, null);
@@ -36,12 +36,12 @@ public class GameBoardCardPosition {
         this.card = card;
     }
 
-    public void setNeighbor(Position position, GameBoardCardPosition gp) {
-        this.adjacentCards.put(position, gp);
+    public Map<Position, GameBoardCardPosition> getNeighbors() {
+        return this.adjacentCards;
     }
 
-    public GameBoardCardPosition getNeighbor(Position position) {
-        return adjacentCards.get(position);
+    public void setNeighbor(Position position, GameBoardCardPosition gp) {
+        this.adjacentCards.put(position, gp);
     }
 
     public Elemental getElement() {
@@ -50,21 +50,5 @@ public class GameBoardCardPosition {
 
     public void setElement(Elemental element) {
         this.element = element;
-    }
-
-    // TODO: 2019-05-21 Add checks for other rules in the future
-    public void flipAdjacent() {
-        this.adjacentCards.forEach((Position neighborPosition, GameBoardCardPosition neighbor) -> {
-            if (neighbor != null && neighbor.ownedBy != this.ownedBy && neighbor.getCard() != null) {
-                if (this.getCard().getRank(neighborPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
-                    neighbor.getOwnedBy().decrementScore();
-                    neighbor.setOwnedBy(this.ownedBy);
-                    this.ownedBy.incrementScore();
-
-                    // TODO: 2019-05-26 Get this outta here
-                    System.out.println(" flipping " + neighbor.getCard().getName());
-                }
-            }
-        });
     }
 }
