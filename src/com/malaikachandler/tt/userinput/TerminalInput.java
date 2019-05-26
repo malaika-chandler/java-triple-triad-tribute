@@ -1,5 +1,6 @@
 package com.malaikachandler.tt.userinput;
 
+import com.malaikachandler.tt.gamecomponents.Card;
 import com.malaikachandler.tt.gamecomponents.GameBoard;
 import com.malaikachandler.tt.gamecomponents.GameConstants;
 import com.malaikachandler.tt.gamecomponents.Player;
@@ -8,41 +9,65 @@ import java.util.Scanner;
 
 public class TerminalInput implements InputSource {
 
-    private TerminalInput instance;
     private Scanner scanner = new Scanner(System.in);
 
     public void playerTurn(GameBoard gameBoard, Player player) {
-        int cardIndex = -1, row = -1, col = -1;
+        int row, col;
+        Card card;
         do {
             // Choose card index from hand
-            do {
-                if (scanner.hasNextInt()) {
-                    cardIndex = scanner.nextInt();
-                }
-            }
-            while (!(cardIndex >= 0 && cardIndex < player.getHand().size()));
-
+            card = chooseCard(player);
 
             // Choose row index on board
-            do {
-                System.out.println("Choose row index: ");
-                if (scanner.hasNextInt()) {
-                    row = scanner.nextInt();
-                }
-            }
-            while (!(row >= 0 && row < GameConstants.BOARD_HEIGHT));
-
+            row = chooseRowIndex();
 
             // Choose col index on board
-            do {
-                System.out.println("Choose col index: ");
-                if (scanner.hasNextInt()) {
-                    col = scanner.nextInt();
-                }
-            }
-            while (!(col >= 0 && col < GameConstants.BOARD_WIDTH));
+            col = chooseColIndex();
 
-        } while (!gameBoard.placeCard(player, row, col, player.popCard(cardIndex)));
+        } while (!gameBoard.placeCard(player, row, col, card));
+
+        System.out.println("Player " + player.getName() + " places " + card.getName() + " at row " + row + " and col " + col);
+
+        // Remove card from player's hand
+        player.popCard(card);
+    }
+
+    private Card chooseCard(Player player) {
+        int cardIndex = -1;
+        do {
+            if (scanner.hasNextInt()) {
+                cardIndex = scanner.nextInt();
+            }
+        }
+        while (!(cardIndex >= 0 && cardIndex < player.getHand().size()));;
+
+        return player.peekCard(cardIndex);
+    }
+
+    private int chooseRowIndex() {
+        int row = -1;
+        do {
+            System.out.println("Choose row index: ");
+            if (scanner.hasNextInt()) {
+                row = scanner.nextInt();
+            }
+        }
+        while (!(row >= 0 && row < GameConstants.BOARD_HEIGHT));
+
+        return row;
+    }
+
+    private int chooseColIndex() {
+        int col = -1;
+        do {
+            System.out.println("Choose col index: ");
+            if (scanner.hasNextInt()) {
+                col = scanner.nextInt();
+            }
+        }
+        while (!(col >= 0 && col < GameConstants.BOARD_WIDTH));
+
+        return col;
     }
 
     @Override

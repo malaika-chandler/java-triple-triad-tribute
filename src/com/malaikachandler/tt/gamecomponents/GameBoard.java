@@ -10,14 +10,15 @@ public class GameBoard {
 
     public GameBoard() {
 
-        this.gameBoard = new GameBoardCardPosition[][] {
-                { new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition() },
-                { new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition() },
-                { new GameBoardCardPosition(), new GameBoardCardPosition(), new GameBoardCardPosition() }
-        };
+        this.gameBoard = new GameBoardCardPosition[GameConstants.BOARD_HEIGHT][GameConstants.BOARD_WIDTH];
+        for (int i = 0; i < GameConstants.BOARD_HEIGHT; i++) {
+            for (int j = 0; j < GameConstants.BOARD_WIDTH; j++) {
+                this.gameBoard[i][j] = new GameBoardCardPosition();
+            }
+        }
 
-        for (int row = 0; row < GameConstants.BOARD_WIDTH; row++) {
-            for (int col = 0; col < GameConstants.BOARD_HEIGHT; col++) {
+        for (int row = 0; row < GameConstants.BOARD_HEIGHT; row++) {
+            for (int col = 0; col < GameConstants.BOARD_WIDTH; col++) {
                 GameBoardCardPosition g = this.gameBoard[row][col];
                 if (row > 0) {
                     g.setNeighbor(Position.TOP, gameBoard[row - 1][col]);
@@ -38,14 +39,11 @@ public class GameBoard {
     public boolean placeCard(Player p, int row, int col, Card card) {
         if (this.isValidRowCol(row, col)) {
             if (gameBoard[row][col].getCard() == null) {
-                System.out.println("Player " + p.getName() + " places " + card.getName() + " at row " + row + " and col " + col);
                 gameBoard[row][col].setCard(p, card);
                 occupiedSpaces++;
                 return true;
             }
         }
-        // Return card to player's hand
-        p.pushCard(card);
 
         return false;
     }

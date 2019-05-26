@@ -53,12 +53,12 @@ public class Player implements Comparable<Player>{
         return hand;
     }
 
-    public Card popCard(int index) {
-        return this.hand.remove(index);
+    public void popCard(Card card) {
+        this.hand.remove(card);
     }
 
-    public void pushCard(Card c) {
-        this.hand.add(c);
+    public Card peekCard(int index) {
+        return this.hand.get(index);
     }
 
     public void setHand(List<Card> dealtHand) {
