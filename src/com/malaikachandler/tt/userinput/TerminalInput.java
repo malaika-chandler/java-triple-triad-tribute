@@ -5,6 +5,7 @@ import com.malaikachandler.tt.gamecomponents.GameBoard;
 import com.malaikachandler.tt.gamecomponents.GameConstants;
 import com.malaikachandler.tt.gamecomponents.Player;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class TerminalInput implements InputSource {
@@ -19,10 +20,10 @@ public class TerminalInput implements InputSource {
             card = chooseCard(player);
 
             // Choose row index on board
-            row = chooseRowIndex();
+            row = chooseRowIndex(gameBoard);
 
             // Choose col index on board
-            col = chooseColIndex();
+            col = chooseColIndex(gameBoard, row);
 
         } while (!gameBoard.placeCard(player, row, col, card));
 
@@ -44,7 +45,7 @@ public class TerminalInput implements InputSource {
         return player.peekCard(cardIndex);
     }
 
-    private int chooseRowIndex() {
+    private int chooseRowIndex(GameBoard gb) {
         int row = -1;
         do {
             System.out.println("Choose row index: ");
@@ -52,20 +53,21 @@ public class TerminalInput implements InputSource {
                 row = scanner.nextInt();
             }
         }
-        while (!(row >= 0 && row < GameConstants.BOARD_HEIGHT));
+        while (!(row >= 0 && row < GameConstants.BOARD_HEIGHT && gb.availableColumnIndexesInRow(row).size() > 0));
 
         return row;
     }
 
-    private int chooseColIndex() {
+    private int chooseColIndex(GameBoard gb, int row) {
         int col = -1;
+        List<Integer> colIndexes = gb.availableColumnIndexesInRow(row);
         do {
             System.out.println("Choose col index: ");
             if (scanner.hasNextInt()) {
                 col = scanner.nextInt();
             }
         }
-        while (!(col >= 0 && col < GameConstants.BOARD_WIDTH));
+        while (!(col >= 0 && col < GameConstants.BOARD_WIDTH && colIndexes.contains(col)));
 
         return col;
     }

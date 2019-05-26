@@ -45,7 +45,7 @@ public class Player implements Comparable<Player>{
         this.score++;
     }
 
-    public void decremementScore() {
+    public void decrementScore() {
         this.score--;
     }
 

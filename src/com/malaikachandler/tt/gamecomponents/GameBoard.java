@@ -1,5 +1,6 @@
 package com.malaikachandler.tt.gamecomponents;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,12 +41,23 @@ public class GameBoard {
         if (this.isValidRowCol(row, col)) {
             if (gameBoard[row][col].getCard() == null) {
                 gameBoard[row][col].setCard(p, card);
+                gameBoard[row][col].flipAdjacent();
                 occupiedSpaces++;
                 return true;
             }
         }
 
         return false;
+    }
+
+    public List<Integer> availableColumnIndexesInRow(int row) {
+        List<Integer> availableColIndexes = new ArrayList<>();
+        for (int i = 0; i < this.gameBoard[row].length; i++) {
+            if (this.gameBoard[row][i].getCard() == null) {
+                availableColIndexes.add(i);
+            }
+        }
+        return availableColIndexes;
     }
 
     private boolean isValidRowCol(int row, int col) {

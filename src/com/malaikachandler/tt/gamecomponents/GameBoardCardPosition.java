@@ -34,7 +34,6 @@ public class GameBoardCardPosition {
     public void setCard(Player p, Card card) {
         this.ownedBy = p;
         this.card = card;
-        this.flipAdjacent();
     }
 
     public void setNeighbor(Position position, GameBoardCardPosition gp) {
@@ -58,9 +57,11 @@ public class GameBoardCardPosition {
         this.adjacentCards.forEach((Position neighborPosition, GameBoardCardPosition neighbor) -> {
             if (neighbor != null && neighbor.ownedBy != this.ownedBy && neighbor.getCard() != null) {
                 if (this.getCard().getRank(neighborPosition) > neighbor.getCard().getRank(neighborPosition.getOpposite())) {
-                    neighbor.getOwnedBy().decremementScore();
+                    neighbor.getOwnedBy().decrementScore();
                     neighbor.setOwnedBy(this.ownedBy);
                     this.ownedBy.incrementScore();
+
+                    // TODO: 2019-05-26 Get this outta here 
                     System.out.println(" flipping " + neighbor.getCard().getName());
                 }
             }
