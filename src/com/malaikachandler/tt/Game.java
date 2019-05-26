@@ -5,13 +5,15 @@ import com.malaikachandler.tt.gamecomponents.Card;
 import com.malaikachandler.tt.gamecomponents.GameBoard;
 import com.malaikachandler.tt.gamecomponents.GameConstants;
 import com.malaikachandler.tt.gamecomponents.Player;
+import com.malaikachandler.tt.graphics.OutputSource;
 import com.malaikachandler.tt.graphics.TerminalColor;
 import com.malaikachandler.tt.graphics.TerminalGraphics;
+import com.malaikachandler.tt.userinput.InputSource;
+import com.malaikachandler.tt.userinput.TerminalInput;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Game {
 
@@ -19,7 +21,9 @@ public class Game {
 
     private GameBoard gb;
 
-    private Scanner scanner = new Scanner(System.in);
+    private OutputSource os = new TerminalGraphics();
+    private InputSource is = new TerminalInput();
+
     private int currentPlayerIndex;
 
     public Game() {
@@ -36,11 +40,8 @@ public class Game {
         // while (board is not full)
         while (gb.hasEmptySpaces()) {
 
-            // Show score
-            TerminalGraphics.displayPlayerScores(players[0], players[1]);
-
             // Show board
-            displayBoard();
+            displayGameState();
 
             // Player places card in open space
             playerTurn();
@@ -49,15 +50,25 @@ public class Game {
             currentPlayerIndex = (currentPlayerIndex + 1) % GameConstants.NUMBER_OF_PLAYERS;
         }
 
-        // Print winner/loser or draw
-        displayBoard();
-        TerminalGraphics.displayPlayerScores(players[0], players[1]);
+        // Show winner/loser or draw
+        endGame();
     }
 
-    private void displayBoard() {
-        players[0].printHand();
-        gb.printGameBoard();
-        players[1].printHand();
+    private void endGame() {
+        displayGameState();
+        os.handlePlayerScores(players);
+
+        os.displayEndGame(players);
+    }
+
+    private void displayGameState() {
+        // Show score
+        os.handlePlayerScores(players);
+
+        os.showPlayerHand(players[0]);
+        os.handleGameBoard(gb);
+        os.showPlayerHand(players[1]);
+
         System.out.println();
         System.out.println();
         System.out.println();
@@ -65,35 +76,25 @@ public class Game {
 
     private void playerTurn() {
         // Indicate player turn
-        int cardIndex, row, col;
-        System.out.println(players[currentPlayerIndex].getName() + "'s turn");
-        do {
-            // Choose card index from hand
-            System.out.println("Choose card index: 0 - " + (players[currentPlayerIndex].getHand().size() - 1));
-            cardIndex = - 1;
-            while (cardIndex == -1) {
-                cardIndex = scanner.nextInt();
-            }
+        os.notifyTurn(players[currentPlayerIndex]);
 
-            System.out.println("Choose row and col: ");
-            // Choose grid coordinates for placement on board
-            // loop until valid location chosen
-            row = scanner.nextInt();
-            col = scanner.nextInt();
+        // Indicate player card options
+        os.indicateCardOptions(players[currentPlayerIndex]);
 
-        } while (!this.gb.placeCard(players[currentPlayerIndex], row, col, players[currentPlayerIndex].popCard(cardIndex)));
+        // Blocking
+        is.playerTurn(gb, players[currentPlayerIndex]);
     }
 
     private void setUpPlayers() {
         String[] colors = { TerminalColor.ANSI_BLUE, TerminalColor.ANSI_PURPLE };
         for (int i = 0; i < GameConstants.NUMBER_OF_PLAYERS; i++) {
-            String name = "";
-            while (name.equals("")) {
-                System.out.println("Enter name for player " + (i + 1));
-                name = scanner.nextLine();
-            }
+
+            os.handleGetInitialPlayerDataPrompt(i);
+
+            String name = is.getName();
             players[i] = new Player(name, colors[i]);
-            // Set initial scores (5,5)
+
+            // Set initial scores
             players[i].setScore(GameConstants.INITIAL_SCORE);
 
             // Set up cards

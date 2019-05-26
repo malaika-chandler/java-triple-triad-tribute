@@ -1,12 +1,10 @@
 package com.malaikachandler.tt.gamecomponents;
 
 
-import com.malaikachandler.tt.graphics.TerminalGraphics;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class Player implements Comparable<Player>{
 
     private String name;
     private String color;
@@ -19,6 +17,12 @@ public class Player {
         this.color = color;
         this.hand = new ArrayList<>();
         this.score = GameConstants.INITIAL_SCORE;
+    }
+
+    @Override
+    public int compareTo(Player player) {
+        // Returns negative if player has larger score than comparison player
+        return player.getScore() - this.getScore();
     }
 
     public String getName() {
@@ -53,11 +57,11 @@ public class Player {
         return this.hand.remove(index);
     }
 
-    public void setHand(List<Card> dealtHand) {
-        this.hand = dealtHand;
+    public void pushCard(Card c) {
+        this.hand.add(c);
     }
 
-    public void printHand() {
-        TerminalGraphics.printPlayerHand(this);
+    public void setHand(List<Card> dealtHand) {
+        this.hand = dealtHand;
     }
 }

@@ -1,15 +1,13 @@
 package com.malaikachandler.tt.graphics;
 
-import com.malaikachandler.tt.gamecomponents.Card;
-import com.malaikachandler.tt.gamecomponents.GameBoardCardPosition;
-import com.malaikachandler.tt.gamecomponents.Player;
 import com.malaikachandler.tt.carddata.CardData;
-import com.malaikachandler.tt.gamecomponents.Position;
+import com.malaikachandler.tt.gamecomponents.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class TerminalGraphics {
+public class TerminalGraphics implements OutputSource {
 
     public static void main(String[] args) {
         // testing
@@ -32,10 +30,6 @@ public class TerminalGraphics {
         printCardRowEx(cards2, TerminalColor.ANSI_RESET);
         printCardRowEx(cards2, TerminalColor.ANSI_RESET);
         printCardRowEx(cards2, TerminalColor.ANSI_RESET);
-    }
-
-    public static void printPlayerHand(Player player) {
-        printCardRowEx(player.getHand(), player.getColor());
     }
 
     public static void printCardRow(List<GameBoardCardPosition> positions, int row) {
@@ -268,9 +262,52 @@ public class TerminalGraphics {
         System.out.println(sb.toString());
     }
 
-    public static void displayPlayerScores(Player p1, Player p2) {
+    @Override
+    public void notifyTurn(Player player) {
+        System.out.println(player.getName() + "'s turn");
+    }
+
+    @Override
+    public void handleGameBoard(GameBoard gameBoard) {
+        for (int i = 0; i < GameConstants.BOARD_HEIGHT; i++) {
+            printCardRow(gameBoard.getRow(i), i);
+        }
+    }
+
+    @Override
+    public void showPlayerHand(Player player) {
+        printCardRowEx(player.getHand(), player.getColor());
+    }
+
+    @Override
+    public void indicateCardOptions(Player player) {
+        System.out.println("Choose card index: 0 - " + (player.getHand().size() - 1));
+    }
+
+    @Override
+    public void handlePlayerScores(Player[] players) {
         System.out.println("Score:");
-        System.out.println(p1.getName() + " has " + p1.getScore() + " points");
-        System.out.println(p2.getName() + " has " + p2.getScore() + " points");
+        for (Player player : players) {
+            System.out.println(player.getName() + " has " + player.getScore() + " points");
+        }
+    }
+
+    @Override
+    public void handleGetInitialPlayerDataPrompt(int index) {
+        System.out.println("Enter name for player " + (index + 1) + ":");
+    }
+
+    @Override
+    public void displayEndGame(Player[] players) {
+        Player maxScorePlayer = Arrays.stream(players).max(Player::compareTo).get();
+        if (maxScorePlayer.getScore() == GameConstants.INITIAL_SCORE) {
+            System.out.println();
+            System.out.println("DRAW");
+            System.out.println();
+        } else {
+            System.out.println();
+            System.out.println(maxScorePlayer.getName() + " wins!");
+            System.out.println();
+        }
     }
 }

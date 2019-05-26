@@ -1,7 +1,5 @@
 package com.malaikachandler.tt.gamecomponents;
 
-import com.malaikachandler.tt.graphics.TerminalGraphics;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +44,9 @@ public class GameBoard {
                 return true;
             }
         }
+        // Return card to player's hand
+        p.pushCard(card);
+
         return false;
     }
 
@@ -56,12 +57,6 @@ public class GameBoard {
 
     public List<GameBoardCardPosition> getRow(int row) {
         return Arrays.asList(gameBoard[row]);
-    }
-
-    public void printGameBoard() {
-        TerminalGraphics.printCardRow(this.getRow(0), 0);
-        TerminalGraphics.printCardRow(this.getRow(1), 1);
-        TerminalGraphics.printCardRow(this.getRow(2), 2);
     }
 
     public boolean hasEmptySpaces() {
