@@ -1,4 +1,4 @@
-package com.malaikachandler.tt.graphics;
+package com.malaikachandler.tt.ui;
 
 import com.malaikachandler.tt.gamecomponents.*;
 

@@ -1,15 +1,7 @@
-package com.malaikachandler.tt;
+package com.malaikachandler.tt.ui;
 
-import com.malaikachandler.tt.carddata.CardData;
-import com.malaikachandler.tt.gamecomponents.Card;
-import com.malaikachandler.tt.gamecomponents.GameBoard;
-import com.malaikachandler.tt.gamecomponents.GameConstants;
-import com.malaikachandler.tt.gamecomponents.Player;
-import com.malaikachandler.tt.graphics.OutputSource;
-import com.malaikachandler.tt.graphics.TerminalColor;
-import com.malaikachandler.tt.graphics.TerminalGraphics;
-import com.malaikachandler.tt.userinput.InputSource;
-import com.malaikachandler.tt.userinput.TerminalInput;
+import com.malaikachandler.tt.gamecomponents.*;
+import com.malaikachandler.tt.ui.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.malaikachandler.tt;
+package com.malaikachandler.tt.ui;
 
 public class Main {
 

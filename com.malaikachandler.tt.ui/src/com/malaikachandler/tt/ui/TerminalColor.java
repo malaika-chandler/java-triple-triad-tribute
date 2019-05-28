@@ -1,4 +1,4 @@
-package com.malaikachandler.tt.graphics;
+package com.malaikachandler.tt.ui;
 
 public class TerminalColor {
     public static final String ANSI_RESET = "\u001B[0m";

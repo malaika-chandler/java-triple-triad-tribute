@@ -1,4 +1,4 @@
-package com.malaikachandler.tt.userinput;
+package com.malaikachandler.tt.ui;
 
 import com.malaikachandler.tt.gamecomponents.GameBoard;
 import com.malaikachandler.tt.gamecomponents.Player;
